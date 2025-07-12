@@ -23,13 +23,15 @@ app.get("/", function (req, res) {
 app.get("/api/:date?", function (req, res) {
   const date = req.params.date
   const requiredDate = new Date(date)
-  
-  const dateObject = {
-    unix: requiredDate.getTime(),
-    utc: requiredDate.toUTCString()
+  if (requiredDate == "Invalid Date") {
+    res.json({error: "Invalid Date"})
+  } else {
+    const dateObject = {
+      unix: requiredDate.getTime(),
+      utc: requiredDate.toUTCString()
+    }
+    res.json(dateObject)
   }
-
-  res.json(dateObject)
 });
 
 
