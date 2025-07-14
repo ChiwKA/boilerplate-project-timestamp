@@ -21,8 +21,13 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/:date?", function (req, res) {
-  const date = req.params.date
-  const requiredDate = new Date(date)
+  const dateInput = req.params.date
+  const integerRegex = /^\d+$/;
+  let convertedDate;
+  if (integerRegex.test(dateInput) && dateInput > 1000) {
+    convertedDate = new Number(dateInput)
+  }
+  const requiredDate = dateInput ? new Date(convertedDate || dateInput) : new Date();
   if (requiredDate == "Invalid Date") {
     res.json({error: "Invalid Date"})
   } else {
